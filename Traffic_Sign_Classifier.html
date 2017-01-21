@@ -11784,16 +11784,16 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">ndimage</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">shuffle</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">shuffle</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="kn">as</span> <span class="nn">mpimg</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="c1"># Visualizations will be shown in the notebook.</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
@@ -11819,7 +11819,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">working_directory</span> <span class="o">=</span> <span class="s1">&#39;/home/carnd/CarND-Traffic-Sign-Classifier-Project/&#39;</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">working_directory</span> <span class="o">=</span> <span class="s1">&#39;/home/carnd/CarND-Traffic-Sign-Classifier-Project/&#39;</span>
 </pre></div>
 
 </div>
@@ -11832,7 +11832,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">training_file</span> <span class="o">=</span> <span class="n">working_directory</span> <span class="o">+</span> <span class="s1">&#39;train.p&#39;</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">training_file</span> <span class="o">=</span> <span class="n">working_directory</span> <span class="o">+</span> <span class="s1">&#39;train.p&#39;</span>
 <span class="n">testing_file</span> <span class="o">=</span> <span class="n">working_directory</span> <span class="o">+</span> <span class="s1">&#39;test.p&#39;</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">training_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -11872,7 +11872,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Replace each question mark with the appropriate value.</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">### Replace each question mark with the appropriate value.</span>
 
 <span class="c1"># TODO: Number of training examples</span>
 <span class="n">n_train</span> <span class="o">=</span> <span class="n">X_train_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -11886,10 +11886,10 @@ div#notebook {
 <span class="c1"># TODO: How many unique classes/labels there are in the dataset.</span>
 <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of training examples =&quot;</span><span class="p">,</span> <span class="n">n_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of testing examples =&quot;</span><span class="p">,</span> <span class="n">n_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Image data shape =&quot;</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of classes =&quot;</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Number of training examples =&quot;</span><span class="p">,</span> <span class="n">n_train</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Number of testing examples =&quot;</span><span class="p">,</span> <span class="n">n_test</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Image data shape =&quot;</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Number of classes =&quot;</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11931,7 +11931,7 @@ Number of classes = 43
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Returns in a python dict the position of the different label values from the labels list&#39;&#39;&#39;</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">unique_values</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
@@ -11942,7 +11942,7 @@ Number of classes = 43
 <span class="k">def</span> <span class="nf">plot_signal</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span><span class="n">label</span><span class="p">,</span><span class="n">axis</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Simply plot a sample image from dataset&#39;&#39;&#39;</span>
     <span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
-    <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Label: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Label: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
     <span class="n">axis</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">axis</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
     <span class="k">return</span> <span class="n">axis</span>
@@ -14788,8 +14788,8 @@ mUymCct+aJlMJpPJZDKZTCbThPX/AZ9hc95Csn9aAAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now let&#39;s visualize how labels are distributed in the train and test sets:</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Now let&#39;s visualize how labels are distributed in the train and test sets:</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#0064FA&#39;</span><span class="p">,</span><span class="s1">&#39;#FC8759&#39;</span><span class="p">]</span>
 <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Train Set&#39;</span><span class="p">,</span><span class="s1">&#39;Test Set&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">dataset_subset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">train</span><span class="p">,</span><span class="n">test</span><span class="p">]):</span>
@@ -14982,10 +14982,10 @@ hIWbJElSIyzcJEmSGmHhJkmS1Ij/D+/PMHSS9fVJAAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;Set of functions to perform image modifications for data augmentation&#39;&#39;&#39;</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="sd">&#39;&#39;&#39;Set of functions to perform image modifications for data augmentation&#39;&#39;&#39;</span>
 
 
-<span class="k">def</span> <span class="nf">image_translation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">,</span><span class="n">random_direction</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">image_translation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">,</span><span class="n">random_direction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Translate images</span>
 <span class="sd">    </span>
@@ -15043,7 +15043,7 @@ hIWbJElSIyzcJEmSGmHhJkmS1Ij/D+/PMHSS9fVJAAAAAElFTkSuQmCC
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">axarr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_temp</span><span class="p">)</span>
-            <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original</span><span class="se">\n</span><span class="s1">Label:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label_idx</span><span class="p">),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+            <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original</span><span class="se">\n</span><span class="s1">Label:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label_idx</span><span class="p">),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">j</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">new_img</span> <span class="o">=</span> <span class="n">histogram_equalization</span><span class="p">(</span><span class="n">img_temp</span><span class="p">)</span>
             <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_img</span><span class="p">)</span>
@@ -15052,10 +15052,10 @@ hIWbJElSIyzcJEmSGmHhJkmS1Ij/D+/PMHSS9fVJAAAAAElFTkSuQmCC
             <span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">degrees</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="o">+</span><span class="mi">30</span><span class="p">)</span>
             <span class="n">new_img</span> <span class="o">=</span> <span class="n">histogram_equalization</span><span class="p">(</span><span class="n">img_temp</span><span class="p">)</span>
-            <span class="n">new_img</span> <span class="o">=</span> <span class="n">image_translation</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">,</span><span class="n">random_direction</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">new_img</span> <span class="o">=</span> <span class="n">image_translation</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">,</span><span class="n">random_direction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
             <span class="n">new_img</span> <span class="o">=</span> <span class="n">image_rotation</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span><span class="n">degrees</span><span class="p">)</span>
             <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_img</span><span class="p">)</span>
-            <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Rot:</span><span class="si">{:3.1f}</span><span class="s1"> degrees </span><span class="se">\n</span><span class="s1"> Trans:x:</span><span class="si">{:3.1f}</span><span class="s1"> y:</span><span class="si">{:3.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+            <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Rot:{:3.1f} degrees </span><span class="se">\n</span><span class="s1"> Trans:x:{:3.1f} y:{:3.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 </pre></div>
@@ -18527,7 +18527,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Apply contrast transformation to X_train_raw:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## Apply contrast transformation to X_train_raw:</span>
 <span class="n">X_train_contrast</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">histogram_equalization</span><span class="p">(</span><span class="n">X_train_raw</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_train_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
 </pre></div>
 
@@ -18541,7 +18541,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">labels_augmentation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span><span class="n">num_pictures</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">labels_augmentation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span><span class="n">num_pictures</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This function generates as many pictures required for each label using small rotations</span>
 <span class="sd">    to reach a total of num_pictures&#39;&#39;&#39;</span>
     <span class="n">label_distributions</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
@@ -18551,14 +18551,14 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
         <span class="n">pics_available</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_distributions</span><span class="p">[</span><span class="n">label</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">pics_available</span> <span class="o">&lt;</span> <span class="n">num_pictures</span><span class="p">:</span>
             <span class="n">pics_to_create</span> <span class="o">=</span> <span class="n">num_pictures</span> <span class="o">-</span> <span class="n">pics_available</span>
-            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Processing label: </span><span class="si">{0}</span><span class="s1"> with </span><span class="si">{2}</span><span class="s1"> images available, </span><span class="si">{1}</span><span class="s1"> images to create...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span><span class="n">pics_to_create</span><span class="p">,</span><span class="n">pics_available</span><span class="p">))</span>
+            <span class="k">print</span> <span class="p">(</span><span class="s1">&#39;Processing label: {0} with {2} images available, {1} images to create...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span><span class="n">pics_to_create</span><span class="p">,</span><span class="n">pics_available</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pics_to_create</span><span class="p">):</span>
                 <span class="c1"># Use any image of the label</span>
                 <span class="n">label_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">label_distributions</span><span class="p">[</span><span class="n">label</span><span class="p">])</span>
                 <span class="n">new_img</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">label_idx</span><span class="p">]</span>
                 <span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
                 <span class="n">degrees</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">+</span><span class="mi">10</span><span class="p">)</span>
-                <span class="n">new_img_processed</span> <span class="o">=</span> <span class="n">image_translation</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">,</span><span class="n">random_direction</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">new_img_processed</span> <span class="o">=</span> <span class="n">image_translation</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span><span class="n">x_percent</span><span class="p">,</span><span class="n">y_percent</span><span class="p">,</span><span class="n">random_direction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
                 <span class="n">new_img_processed</span> <span class="o">=</span> <span class="n">image_rotation</span><span class="p">(</span><span class="n">new_img_processed</span><span class="p">,</span><span class="n">degrees</span><span class="p">)</span>
                 <span class="n">new_img_processed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">new_img_processed</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
                 <span class="c1"># Add results</span>
@@ -18569,7 +18569,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
         
 <span class="c1">#Now, let&#39;s create a balanced train and validation sets:</span>
 <span class="n">num_pictures_train</span> <span class="o">=</span> <span class="mi">1200</span> <span class="c1"># number of pictures for each label in the preprocessed train set</span>
-<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Processing Train Sets, to include </span><span class="si">{0}</span><span class="s2"> pictures per label.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_pictures_train</span><span class="p">))</span>
+<span class="k">print</span> <span class="p">(</span><span class="s2">&quot;Processing Train Sets, to include {0} pictures per label.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_pictures_train</span><span class="p">))</span>
 <span class="n">X_train_augmented</span><span class="p">,</span> <span class="n">y_train_augmented</span> <span class="o">=</span> <span class="n">labels_augmentation</span><span class="p">(</span><span class="n">X_train_contrast</span><span class="p">,</span><span class="n">y_train_raw</span><span class="p">,</span><span class="n">num_pictures_train</span><span class="p">)</span>
 </pre></div>
 
@@ -18593,8 +18593,8 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now let&#39;s visualize how labels are distributed in the preprocessed train and validation sets:</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Now let&#39;s visualize how labels are distributed in the preprocessed train and validation sets:</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#0064FA&#39;</span><span class="p">,</span><span class="s1">&#39;#9A2EFE&#39;</span><span class="p">]</span>
 <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Original Train Set&#39;</span><span class="p">,</span><span class="s1">&#39;Processed Train Set&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">dataset_subset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">y_train_raw</span><span class="p">,</span><span class="n">y_train_augmented</span><span class="p">]):</span>
@@ -18627,7 +18627,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># As example let&#39;s represent a particular image:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># As example let&#39;s represent a particular image:</span>
 <span class="n">label_distributions</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">y_train_augmented</span><span class="p">)</span>
 <span class="n">label</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Visualize examples just for label = 0</span>
 
@@ -18662,7 +18662,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Save processed data:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Save processed data:</span>
 <span class="n">preprocessed_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">X_train_augmented</span><span class="p">,</span> <span class="n">y_train_augmented</span><span class="p">]</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">working_directory</span> <span class="o">+</span> <span class="s2">&quot;preprocessed_data.pkl&quot;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">preprocessed_data</span><span class="p">,</span><span class="n">fp</span><span class="p">)</span>
@@ -18688,7 +18688,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Processed data:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Load Processed data:</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">working_directory</span> <span class="o">+</span> <span class="s1">&#39;preprocessed_data.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
 <span class="n">X_train_augmented</span><span class="p">,</span> <span class="n">y_train_augmented</span> <span class="o">=</span> <span class="n">data</span>
 </pre></div>
@@ -18703,7 +18703,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># As example let&#39;s represent a particular image:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># As example let&#39;s represent a particular image:</span>
 <span class="n">label_distributions</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">y_train_augmented</span><span class="p">)</span>
 <span class="n">label</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># Visualize examples just for label = 0</span>
 
@@ -18716,7 +18716,7 @@ VDuW/tBSqVQqlUqlUqlUqh1Lf2ipVCqVSqVSqVQq1Y71/wFDVFegyVabzgAAAABJRU5ErkJggg==
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_temp</span><span class="p">)</span>
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-<span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Examples for Label: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
+<span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Examples for Label: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -21712,7 +21712,7 @@ ZDINWf8Ph1pc43qyFPMAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">normalization</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">normalization</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;MinMax Scaling&#39;&#39;&#39;</span>
     <span class="n">normalized_image</span> <span class="o">=</span> <span class="p">(</span><span class="n">image</span> <span class="o">-</span> <span class="n">image</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">image</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">normalized_image</span>
@@ -21741,7 +21741,7 @@ ZDINWf8Ph1pc43qyFPMAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># As example let&#39;s represent a particular image:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># As example let&#39;s represent a particular image:</span>
 <span class="n">label_distributions</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">y_train_augmented</span><span class="p">)</span>
 <span class="n">label</span> <span class="o">=</span> <span class="mi">31</span> <span class="c1"># Visualize examples just for label = 0</span>
 
@@ -21754,7 +21754,7 @@ ZDINWf8Ph1pc43qyFPMAAAAASUVORK5CYII=
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_temp</span><span class="p">)</span>
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
         <span class="n">axarr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-<span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Examples for Label: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
+<span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Examples for Label: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -24913,7 +24913,7 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s create a train and validation sets:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s create a train and validation sets:</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_validation</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_train_augmented_scaled</span><span class="p">,</span> <span class="n">y_train_augmented</span><span class="p">,</span><span class="n">stratify</span><span class="o">=</span><span class="n">y_train_augmented</span> <span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 
@@ -24927,7 +24927,7 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now, define epoch and batch size:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Now, define epoch and batch size:</span>
 <span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
 </pre></div>
@@ -24942,16 +24942,16 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s design an initial approach using LeNet arquitecture:</span>
-<span class="kn">from</span> <span class="nn">tensorflow.contrib.layers</span> <span class="k">import</span> <span class="n">flatten</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s design an initial approach using LeNet arquitecture:</span>
+<span class="kn">from</span> <span class="nn">tensorflow.contrib.layers</span> <span class="kn">import</span> <span class="n">flatten</span>
 
-<span class="k">def</span> <span class="nf">LeNet</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n_classes</span><span class="p">,</span><span class="n">to_gray</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">dropout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>    
+<span class="k">def</span> <span class="nf">LeNet</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n_classes</span><span class="p">,</span><span class="n">to_gray</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">dropout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>    
     <span class="c1"># Hyperparameters</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
     
     <span class="k">if</span> <span class="n">to_gray</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">rgb_to_grayscale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">rgb_to_grayscale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
         <span class="n">input_channels</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">input_channels</span> <span class="o">=</span> <span class="mi">3</span>
@@ -24982,7 +24982,7 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
     <span class="n">fc0</span>   <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">conv2</span><span class="p">)</span>
     
     <span class="c1"># Dropout:</span>
-    <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">fc0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">fc0</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span> <span class="n">fc0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">fc0</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
     
     <span class="c1"># Layer 3: Fully Connected. Input = 400. Output = 120.</span>
     <span class="n">fc1_W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">mu</span><span class="p">,</span> <span class="n">stddev</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">))</span>
@@ -24993,7 +24993,7 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
     <span class="n">fc1</span>    <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">fc1</span><span class="p">)</span>
     
     <span class="c1"># Dropout:</span>
-    <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">fc1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">fc1</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span> <span class="n">fc1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">fc1</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
 
     <span class="c1"># Layer 4: Fully Connected. Input = 120. Output = 84.</span>
     <span class="n">fc2_W</span>  <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">84</span><span class="p">),</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">mu</span><span class="p">,</span> <span class="n">stddev</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">))</span>
@@ -25021,9 +25021,9 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s create the placeholders:</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s create the placeholders:</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="p">(</span><span class="bp">None</span><span class="p">))</span>
 <span class="n">one_hot_y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">)</span>
 <span class="n">keep_prob</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> 
 </pre></div>
@@ -25038,10 +25038,10 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Training Pipeline:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Training Pipeline:</span>
 <span class="n">rate</span> <span class="o">=</span> <span class="mf">0.001</span>
 <span class="n">dropout</span> <span class="o">=</span> <span class="mf">1.</span>
-<span class="n">logits</span> <span class="o">=</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n_classes</span><span class="p">,</span><span class="n">to_gray</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">)</span> <span class="c1"># conv1_W,conv2_W,fc1_W,fc2_W,fc3_W,</span>
+<span class="n">logits</span> <span class="o">=</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n_classes</span><span class="p">,</span><span class="n">to_gray</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">)</span> <span class="c1"># conv1_W,conv2_W,fc1_W,fc2_W,fc3_W,</span>
 <span class="c1">#regularizers = (tf.nn.l2_loss(conv1_W) + tf.nn.l2_loss(conv2_W) + tf.nn.l2_loss(fc1_W) </span>
 <span class="c1">#                + tf.nn.l2_loss(fc2_W) + tf.nn.l2_loss(fc3_W))</span>
 <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">one_hot_y</span><span class="p">)</span>
@@ -25061,7 +25061,7 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Model Evaluation:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Model Evaluation:</span>
 <span class="n">correct_prediction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">one_hot_y</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="n">accuracy_operation</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">correct_prediction</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
 <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
@@ -25087,7 +25087,7 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_accs</span> <span class="o">=</span> <span class="p">[]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">train_accs</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">val_accs</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1"># Training Process:</span>
@@ -25095,8 +25095,8 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
     <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
     <span class="n">num_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
     
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training...&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Training...&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
         <span class="n">X_set</span><span class="p">,</span> <span class="n">y_set</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">BATCH_SIZE</span><span class="p">):</span>
@@ -25111,12 +25111,12 @@ rP8fTLkfUPH/w3oAAAAASUVORK5CYII=
         <span class="n">train_accs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">training_accuracy</span><span class="p">)</span>
         <span class="n">val_accs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">validation_accuracy</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EPOCH </span><span class="si">{}</span><span class="s2"> ...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Validation Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">validation_accuracy</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;EPOCH {} ...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Validation Accuracy = {:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">validation_accuracy</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">()</span>
         
     <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="s1">&#39;lenet_raw&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model saved&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Model saved&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -25205,7 +25205,7 @@ Model saved
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_model_performance</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="n">validation</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">plot_model_performance</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="n">validation</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Visualize training results</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -25229,7 +25229,7 @@ Model saved
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_model_performance</span><span class="p">(</span><span class="n">train_accs</span><span class="p">,</span><span class="n">val_accs</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">plot_model_performance</span><span class="p">(</span><span class="n">train_accs</span><span class="p">,</span><span class="n">val_accs</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -25536,7 +25536,7 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First, contrast corrections:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># First, contrast corrections:</span>
 <span class="n">X_test_processed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">histogram_equalization</span><span class="p">(</span><span class="n">X_test_raw</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_test_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
 <span class="c1"># And second, scaling:</span>
 <span class="n">X_test_processed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">normalization</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">X_test_processed</span><span class="p">])</span>
@@ -25552,11 +25552,11 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Evaluate the model over unseen data:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Evaluate the model over unseen data:</span>
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
     <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
     <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">X_test_processed</span><span class="p">,</span> <span class="n">y_test_raw</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy = {:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -25671,7 +25671,7 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> After a general representation of the labels distributions, it was found a significant skewness of the dataset. For such reason, data augmentation techniques were applied and train_test_split with stratify was used to somehow balance the dataset and preserve labels distribution. Train&amp;Validation sets are used to train the model, while a test set is used to validate model results over unseen data. Augmented data was conducted using image rotations in the range [-10,+10] degrees and translation in the X and Y axis in the range [0,20]%. The minimum number of images per label was set to 1000. Some tests also included gray scaled images instead of colored.</p>
+<p><strong>Answer:</strong> After a general representation of the labels distributions, it was found a significant skewness of the dataset. For such reason, data augmentation techniques were applied and train_test_split with stratify was used to somehow balance the dataset and preserve labels distribution. Train&amp;Validation sets are used to train the model, while a test set is used to validate model results over unseen data. Augmented data was conducted using image rotations in the range [-10,+10] degrees and translation in the X and Y axis in the range [0,20]%. The minimum number of images per label was set to 1000. Some tests also included grayscaled images instead of colored. To end, normalization is applied. This is a purely practical thing because in practice convergence could take forever if your input is spread out too much.</p>
 
 </div>
 </div>
@@ -25765,7 +25765,8 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> Feeling a bit loss when is time to define an architecture, I used LeCun approach with minimal changes (dropout is now a parameter as well as feeding the network with gray images), I used this archtecture as baseline and simply attempted some parameters configurations in order to maximize model's performance and reach an accuracy over 90%. Results for the different attemps are sumarize few lines above.</p>
+<p><strong>Answer:</strong> Convolutional nets are elected to be the most efficient technique to extract relevant information from, in this case, images to be used in classification tasks. When used for image recognition, convolutional neural networks (CNNs) consist of multiple layers of small kernels which process portions of the input image, called receptive fields. Kernels are the small matrix (normally 3x3 or 5x5) applied over the input image to extract features from data, this technique has been used in image processing for decades, from Photoshop filters to medical imaging. <a href="http://setosa.io/ev/image-kernels/">This blog by Victor Powell</a> is an excellent resource to understand how kernels work. Feeling a bit loss when is time to define an architecture, I used LeCun approach with minimal changes (dropout is now a parameter as well as feeding the network with gray images), I used this architecture as baseline and simply attempted some parameters configurations in order to maximize model's performance and reach an accuracy of 90%. For example, dropout was included as it seems to be effective to increase the robustness of the network and prevent overfitting, also regularization was attempted to also try to reduce potential overfitting as described in the <a href="http://www.deeplearningbook.org/contents/regularization.html">Deep Learning book</a>. Also, for activations, it is used ReLUs since do not face gradient vanishing problem as with sigmoid and tanh function. Also, It has been shown that deep networks can be trained efficiently using ReLU even without pre-training as <a href="https://www.quora.com/What-is-special-about-rectifier-neural-units-used-in-NN-learning">here</a> mentioned. To end, pooling layers are included to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting as <a href="http://cs231n.github.io/convolutional-networks/#pool">here</a> described. For simplicity, just max pooling is used and no other alternatives were tested.</p>
+<p>Results for the different attempts are summarized few lines above.</p>
 
 </div>
 </div>
@@ -25807,7 +25808,7 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[115]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_predictions</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">softmax</span><span class="p">,</span><span class="n">path_to_signnames</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">plot_predictions</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">softmax</span><span class="p">,</span><span class="n">path_to_signnames</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Plot input image and top5 model&#39;s predictions</span>
 <span class="sd">    </span>
@@ -25820,8 +25821,8 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_signnames</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;probs&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">softmax</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;probs&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;probs&#39;</span><span class="p">,</span><span class="s1">&#39;SignName&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_records</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;probs&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;probs&#39;</span><span class="p">,</span><span class="s1">&#39;SignName&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_records</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)]</span>
     <span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
     <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
     <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
@@ -25882,7 +25883,7 @@ k4Vzzrmo/h/EHB7jQtBdwAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
 
 <span class="n">image_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">img_path</span> <span class="k">for</span> <span class="n">img_path</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;real_pics/*.jpg&quot;</span><span class="p">)]</span>
 
@@ -28361,7 +28362,7 @@ AIoTIgAAQHE/5Sx4ppPZJoEAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Add images to numpy array:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Add images to numpy array:</span>
 <span class="n">real_pics</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">mpimg</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span> <span class="k">for</span> <span class="n">img_path</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;real_pics/*.jpg&quot;</span><span class="p">)])</span>
 
 <span class="c1"># Resize to 32X32:</span>
@@ -28986,11 +28987,11 @@ SUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[113]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">image_paths</span><span class="p">),</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">image_paths</span><span class="p">),</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">real_pics</span><span class="p">,</span><span class="n">real_pics_labels</span><span class="p">):</span>
     <span class="n">axarr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">axarr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Label: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Label: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
     <span class="n">axarr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">axarr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
     <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -29591,12 +29592,12 @@ RK5CYII=
 <div class="prompt input_prompt">In&nbsp;[114]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">real_pics_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">22</span><span class="p">])</span> <span class="c1"># these are the correspoing labels for the images</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">real_pics_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">22</span><span class="p">])</span> <span class="c1"># these are the correspoing labels for the images</span>
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
     <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
 
     <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">real_pics</span><span class="p">,</span> <span class="n">real_pics_labels</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy = {:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -29623,11 +29624,11 @@ RK5CYII=
 <div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
     <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
 
     <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">label2</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy = {:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -29654,7 +29655,7 @@ RK5CYII=
 <div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
     <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
     <span class="n">softmax</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">),</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">real_pics</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})</span>
 </pre></div>
@@ -29669,7 +29670,7 @@ RK5CYII=
 <div class="prompt input_prompt">In&nbsp;[116]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## create function to visualize results:</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## create function to visualize results:</span>
 <span class="n">path_to_signnames</span> <span class="o">=</span> <span class="n">working_directory</span> <span class="o">+</span> <span class="s1">&#39;signnames.csv&#39;</span>
 
 <span class="k">for</span> <span class="n">img_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">real_pics</span><span class="p">)):</span>
@@ -32160,7 +32161,7 @@ a = np.array([[ 0.24879643,  0.07032244,  0.12641572,  0.34763842,  0.07893497,
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython2"><pre><span></span> 
 </pre></div>
 
 </div>
