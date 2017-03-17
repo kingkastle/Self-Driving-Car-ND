@@ -108,7 +108,10 @@ def process_images(path_img, X_PIX, Y_PIX, Y_CROP):
     :param Y_CROP: y pixels to crop image
     :return: processed image
     """
-    path_img = path_img.replace('../initial_files/', CURRENT_PATH)
+    # some imgs have an incorrect path:
+    if 'rafaelcastillo' in path_img:
+        path_img = path_img.replace("/home/rafaelcastillo/Documents/SDCND/Simulators/udacity-sdc-udacity-self-driving-car-simulator-dominique-development-linux-desktop-64-bit-5/Data/", "")
+
     # read image:
     img = cv2.imread(path_img, 1)
     # normalize image:
@@ -126,45 +129,50 @@ def process_images(path_img, X_PIX, Y_PIX, Y_CROP):
 if __name__ == "__main__":
     print("Processing...")
 
-    # load data
-    df = pandas.read_csv(PATH_TO_LOG, sep=",")
+    # Read files from multiple sources:
+    dataset = []
+    for sour in sources:
+        print ("Loading source: ", sour)
+        # load data
+        df = pandas.read_csv(sources[sour] + "driving_log.csv", sep=",")
 
-    # some required transformation in the dataset:
-    df["center"] = df['center'].apply(lambda x: "../initial_files/Data/" + x)
-    df[['steering', 'throttle', 'brake', 'speed']] = df[['steering', 'throttle', 'brake', 'speed']].astype(float)
+        # some required transformation in the dataset:
+        df["center"] = df['center'].apply(lambda x: sources[sour] + x)
+        df[['steering', 'throttle', 'brake', 'speed']] = df[['steering', 'throttle', 'brake', 'speed']].astype(float)
 
-    # Generate a list of tuples where the first element is the numpy array with images and the second element the
-    # corresponding steering angle:
-    dataset = [
-        (process_images(df.loc[idx, 'center'], X_PIX, Y_PIX, Y_CROP), df.loc[idx, 'steering']) for
-        idx in range(0, df.shape[0])]
+        # Generate a list of tuples where the first element is the numpy array with images and the second element the
+        # corresponding steering angle:
+        dataset += [(process_images(df.loc[idx, 'center'], X_PIX, Y_PIX, Y_CROP), df.loc[idx, 'steering']) for
+            idx in range(0, df.shape[0])]
+
+    print ("Dataset Size: ", len(dataset))
 
     # remove straight drives:
-    dataset = [tup for tup in dataset if tup[1] != 0]
+    # dataset = [tup for tup in dataset if tup[1] != 0] ## Not sure of the benefits of this statement
 
     # Generate X and Y sets for model_CNN training:
     X = np.concatenate([x[0][np.newaxis, :] for x in dataset], axis=0).astype('float32')
     Y = np.asarray([x[1] for x in dataset]).astype('float32')
 
-    # identify straight drives and remove 80% of them:
-    straight_drives = np.where(np.abs(Y) < 0.10)[0]
+    # identify straight drives and remove 70% of them:
+    straight_drives = np.where(np.abs(Y) < 0.05)[0]
     num_sd = len(straight_drives)
-    print('Straight drives removed: ', int(0.3*num_sd))
-    X_bal = np.delete(X, straight_drives[:int(0.3*num_sd)], axis=0)
-    Y_bal = np.delete(Y, straight_drives[:int(0.3*num_sd)])
+    print('Straight drives removed: ', int(0.7*num_sd))
+    X_bal = np.delete(X, straight_drives[:int(0.7*num_sd)], axis=0)
+    Y_bal = np.delete(Y, straight_drives[:int(0.7*num_sd)])
 
     # identify almost straight drives and remove 60% of them:
-    almost_straight_drives = np.where((np.abs(Y) < 0.25) & (np.abs(Y) >= 0.10))[0]
+    almost_straight_drives = np.where((np.abs(Y) < 0.25) & (np.abs(Y) >= 0.05))[0]
     num_sd = len(almost_straight_drives)
-    print('Almost Straight drives removed: ', int(0.80 * num_sd))
-    X_bal = np.delete(X_bal, almost_straight_drives[:int(0.80 * num_sd)], axis=0)
-    Y_bal = np.delete(Y_bal, almost_straight_drives[:int(0.80 * num_sd)])
+    print('Almost Straight drives removed: ', int(0.01 * num_sd))
+    X_bal = np.delete(X_bal, almost_straight_drives[:int(0.01 * num_sd)], axis=0)
+    Y_bal = np.delete(Y_bal, almost_straight_drives[:int(0.01 * num_sd)])
 
-    print("Dataset shape:", X.shape)
+    print("Dataset shape:", X_bal.shape)
 
     # Visualize labels distributions after artificial balance:
     # generate plot:
-    f, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 7), sharey=True)
+    f, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 6), sharey=True)
     f.tight_layout()
     n, bins, patches = ax1.hist(Y, 100, facecolor='#03B3E4', alpha=0.75)
     n, bins, patches = ax2.hist(Y_bal, 100, facecolor='#03B3E4', alpha=0.75)

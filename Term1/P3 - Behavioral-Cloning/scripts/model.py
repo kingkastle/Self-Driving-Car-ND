@@ -57,7 +57,7 @@ def generator(samples, labels, batch_size):
 # Configuration:
 ############################################################
 batch_size = 512
-nb_epochs = 4
+nb_epochs = 3
 seed = 2016
 test_size = 0.2
 
@@ -86,22 +86,7 @@ print("y_train shape: ", y_train.shape)
 ############################################################
 # Define our time-distributed setup
 ############################################################
-# model = Sequential()
-# model.add(Convolution2D(24, 4, 4, subsample=(2, 2), activation='relu', input_shape=(y_pix, x_pix, 3)))
-# model.add(Convolution2D(36, 4, 4, subsample=(2, 2), activation='relu'))
-# model.add(Convolution2D(48, 4, 4, subsample=(2, 2), activation='relu'))
-# model.add(Convolution2D(64, 3, 3, activation='relu'))
-# model.add(Flatten())
-# model.add(Dense(100))
-# model.add(Dropout(0.2))
-# model.add(Dense(64))
-# model.add(Dense(10, activation='tanh'))
-# model.add(Dense(1))
 model = Sequential()
-
-# Use a lambda layer to normalize the input data
-# model.add(Lambda(lambda x: normalize(x, 0, 1), input_shape=image_shape, output_shape=image_shape))
-# Removed Lambda layer. Seems to add more troubles than it helps.
 model.add(
 Convolution2D(nb_filter=24, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2), input_shape=(Y_PIX, X_PIX, 3)))
 model.add(Activation('relu'))
