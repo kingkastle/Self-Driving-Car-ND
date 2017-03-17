@@ -52,7 +52,7 @@ flipping = True
 path_example = '/home/carnd/Self-Driving-Car-ND/Term1/P3 - Behavioral-Cloning/Data/udacity/data/IMG/center_2016_12_01_13_31_15_106.jpg'
 img = cv2.imread(path_example, 1)
 
-fig = plt.figure(figsize=(10,7))
+fig = plt.figure(figsize=(9, 4))
 gs = gridspec.GridSpec(1, 2)
 ax1 = plt.subplot(gs[0, 0])
 ax1.imshow(img)
@@ -62,12 +62,12 @@ ax2 = plt.subplot(gs[0, 1])
 ax2.imshow(process_data.process_images(path_example, 160, 100, 60))
 ax2.axis('off')
 ax2.set_title('Resize & Crop')
-#gs.tight_layout(fig, rect=[0, 0, 1, 0.97])
+gs.tight_layout(fig)
 fig.savefig(PATH_TO_IMG + 'cropped_image.jpg')
 
 # augmented_images(img, steering_angle, flipping, intensity)
 img_proc = process_data.process_images(path_example, 160, 100, 60)
-fig = plt.figure(figsize=(15, 10))
+fig = plt.figure(figsize=(9, 4))
 gs = gridspec.GridSpec(1, 4)
 ax1 = plt.subplot(gs[0, 0])
 ax1.imshow(img)
