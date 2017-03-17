@@ -67,7 +67,7 @@ fig.savefig(PATH_TO_IMG + 'cropped_image.jpg')
 
 # augmented_images(img, steering_angle, flipping, intensity)
 img_proc = process_data.process_images(path_example, 160, 100, 60)
-fig = plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(14, 9))
 gs = gridspec.GridSpec(1, 4)
 ax1 = plt.subplot(gs[0, 0])
 ax1.imshow(img)
