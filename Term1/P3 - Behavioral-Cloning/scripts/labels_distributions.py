@@ -62,12 +62,12 @@ ax2 = plt.subplot(gs[0, 1])
 ax2.imshow(process_data.process_images(path_example, 160, 100, 60))
 ax2.axis('off')
 ax2.set_title('Resize & Crop')
-gs.tight_layout(fig)
+plt.tight_layout()
 fig.savefig(PATH_TO_IMG + 'cropped_image.jpg')
 
 # augmented_images(img, steering_angle, flipping, intensity)
 img_proc = process_data.process_images(path_example, 160, 100, 60)
-fig = plt.figure(figsize=(9, 4))
+fig = plt.figure(figsize=(12, 6))
 gs = gridspec.GridSpec(1, 4)
 ax1 = plt.subplot(gs[0, 0])
 ax1.imshow(img)
@@ -86,7 +86,7 @@ ax4 = plt.subplot(gs[0, 3])
 ax4.imshow(process_data.augmented_images(img_proc, st_angle, True, 0.9)[0])
 ax4.axis('off')
 ax4.set_title('Augmented example\nSteering Angle:{0}\nFlipping=True\nIntensity=0.9'.format(st_angle*-1),fontsize=8)
-
+plt.tight_layout()
 fig.savefig(PATH_TO_IMG + 'augmented_example.jpg')
 
 
