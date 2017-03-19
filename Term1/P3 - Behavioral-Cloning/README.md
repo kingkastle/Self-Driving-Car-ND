@@ -59,7 +59,7 @@ Brightness, random shadows and random flipping are the transformations used to g
 For training, the dataset is divided into training and validation sets, with an 80/20 split.  I didn’t explicitly make a test dataset, as the real test is whether the car is able to drive around the track in the simulator. To generate the augmented data to be used to train the neural network it is used the function: ```generator()```, the main advantage of this generator is to generate images "on-the-fly" to avoid the need of creating and **storing** all these examples.
 
 ## Model Results:
-In this [Youtube Video](https://youtu.be/gM-k6z8_30Y) is presented an example of fully autonomous drive! :movie_camera::blue_car::computer:
+In this [Youtube Video](https://youtu.be/R3pFg7B5yMM) is presented an example of fully autonomous drive! :movie_camera::blue_car::computer:
 
 ## Reflections
 
