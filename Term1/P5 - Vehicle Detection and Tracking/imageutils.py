@@ -483,94 +483,81 @@ def draw_labeled_bboxes(img, labels):
     # Return the image
     return img
 
-# from params import *
-# import matplotlib.pyplot as plt
-# from matplotlib import gridspec
+
+def extract_feats_dataset():
+    """
+    Process all images in the dataset and generates a pickle object with the associated features and labels arrays.
+    Features are distributed in two different folders: vehicles
+    :param dataset_path: path to dataset and non-vehicles
+    :return: features and dict sizes pickle object
+    """
+    # Create a list to append feature vectors to
+    features = {'vehicles': {}, 'non-vehicles': {}}
+    sizes_sources = {'vehicles': {}, 'non-vehicles': {}}
+    for label in ['vehicles', 'non-vehicles']:
+        for dir, subdir, files in os.walk(DATASET_PATH + label):
+            if len(subdir) > 0:
+                for source in subdir:
+                    features[label][source] = []
+            else:
+                source = dir[dir.rfind("/") + 1:]
+                # features[label][source] = [x for x in files if ".png" in x]
+                features[label][source] = [single_img_features(mpimg.imread(os.path.join(dir, x))) for x in files if
+                                           ".png" in x]
+                sizes_sources[label][source] = len(features[label][source])
+                # save results to pandas dataframe:
+                pickle.dump([features, sizes_sources], open(DATASET_PATH + "features.p", "wb"))
+    return features, sizes_sources
 #
-# # Load image:
-# fname = '/home/carnd/Self-Driving-Car-ND/Term1/P5 - Vehicle Detection and
-# Tracking/CarND-Vehicle-Detection/test_images/test3.jpg'
-# img = mpimg.imread(fname)
 #
-# windows_all = []
-# # get list of windows:
-# windows = slide_window(img, x_start_stop=[200, None], y_start_stop=[370, 500],
-#                        xy_window=(70, 70), xy_overlap=XY_OVERLAP)
-# windows_all.extend(windows)
-# # windows = slide_window(img, x_start_stop=[200, None], y_start_stop=[400, 600],
-# #                        xy_window=(130, 130), xy_overlap=XY_OVERLAP)
-# # windows_all.extend(windows)
-# # windows = slide_window(img, x_start_stop=[200, None], y_start_stop=[350, None],
-# #                        xy_window=(240, 240), xy_overlap=XY_OVERLAP)
-# # windows_all.extend(windows)
-#
-# img_1 = draw_boxes(img, [windows[1]], color=(0, 0, 255), thick=6)
-#
-# img_w = draw_boxes(img, windows_all, color=(0, 0, 255), thick=6)
-#
-#
-# # Create layout distribution:
-# fig = plt.figure(figsize=(13, 7))
-# gs = gridspec.GridSpec(1, 3)
-# ax1 = plt.subplot(gs[0, 0])
-# ax1.imshow(img)
-# ax1.set_title('Original Image')
-# ax1.axis('off')
-# ax2 = plt.subplot(gs[0, 1])
-# ax2.imshow(img_1)
-# ax2.axis('off')
-# ax2.set_title('Window Example')
-# ax3 = plt.subplot(gs[0, 2])
-# ax3.imshow(img_w)
-# ax3.axis('off')
-# ax3.set_title('Windows Represented')
-# fig.savefig(OUTPUT_IMAGES + 'sliding_windows.jpg')
-#
-# # Load the classifier:
-# clf = pickle.load(open(DATASET_PATH + "estimator.p", "rb"))
-#
-# # Identify Windows with Car included
-# # windows_all = []
-# # get list of windows:
-# # windows = slide_window(img, x_start_stop=[200, None], y_start_stop=[370, 450],
-# #                        xy_window=(64, 64), xy_overlap=XY_OVERLAP)
-# # windows_all.extend(windows)
-# # windows = slide_window(img, x_start_stop=[200, None], y_start_stop=[400, 600],
-# #                        xy_window=(130, 130), xy_overlap=XY_OVERLAP)
-# # windows_all.extend(windows)
-# # windows = slide_window(img, x_start_stop=[200, None], y_start_stop=[370, None],
-# #                        xy_window=(240, 240), xy_overlap=XY_OVERLAP)
-# # windows_all.extend(windows)
-#
-# hot_windows = search_windows(img, windows_all, clf)
-#
-# # Add heat to each box in box list
-# heat = np.zeros_like(img[:, :, 0]).astype(np.float)
-# heat = add_heat(heat, hot_windows)
-#
-# # Apply threshold to help remove false positives
-# heat = apply_threshold(heat, THRESHOLD)
-#
-# # Visualize the heatmap when displaying
-# heatmap = np.clip(heat, 0, 255)
-#
-# # Find final boxes from heatmap using label function
-# labels = label(heatmap)
-# draw_img = draw_labeled_bboxes(np.copy(img), labels)
-#
-# # Create layout distribution:
-# fig = plt.figure(figsize=(13, 7))
-# gs = gridspec.GridSpec(1, 3)
-# ax1 = plt.subplot(gs[0, 0])
-# ax1.imshow(img)
-# ax1.set_title('Original Image')
-# ax1.axis('off')
-# ax2 = plt.subplot(gs[0, 1])
-# ax2.imshow(heatmap, cmap='jet')
-# ax2.axis('off')
-# ax2.set_title('Heat Map')
-# ax3 = plt.subplot(gs[0, 2])
-# ax3.imshow(draw_img)
-# ax3.axis('off')
-# ax3.set_title('Cars Identified')
-# fig.savefig(OUTPUT_IMAGES + 'cars_identified.jpg')
+def create_sets(features, sizes_sources, split=[0.7, 0.2, 0.1]):
+    """
+    Generate train/test/validation sets
+    :param features: list with features
+    :param sizes_sources: dict with image sources
+    :param split: list with defined set sizes
+    :return:
+    """
+    feat_train, label_train, feat_test, label_test, feat_val, label_val = [], [], [], [], [], []
+    for label in ['vehicles', 'non-vehicles']:
+        for source in features[label].keys():
+            idx_items_train = int(split[0] * sizes_sources[label][source])
+            idx_items_test = int(np.sum(split[:2]) * sizes_sources[label][source])
+            feat_train.extend(features[label][source][:idx_items_train])
+            feat_test.extend(features[label][source][idx_items_train:idx_items_test])
+            feat_val.extend(features[label][source][idx_items_test:])
+            if label == 'vehicles':
+                label_value = 1
+            else:
+                label_value = 0
+            label_train.extend([label_value] * (len(features[label][source][:idx_items_train])))
+            label_test.extend([label_value] * (len(features[label][source][idx_items_train:idx_items_test])))
+            label_val.extend([label_value] * (len(features[label][source][idx_items_test:])))
+    return np.array(feat_train), np.array(label_train), np.array(feat_test), np.array(label_test), np.array(
+        feat_val), np.array(label_val)
+
+
+def run_models(feat_train, label_train, feat_test, label_test):
+    """
+    Test different model configurations and generates a pickle object with the best performing
+    :param feat_train: array with train feats
+    :param label_train: array with train labels
+    :param feat_test: array with test feats
+    :param label_test: array with test labels
+    :return: None
+    """
+    best_f1 = 0
+    for num_variables in range(10, 90, 30):
+        for C in [1, 10]:
+            for tol in [1e-3, 1e-5, 1e-4]:
+                pipeline = Pipeline([('scaler', StandardScaler()), ('selection', SelectPercentile(percentile=num_variables)),
+                                     ('clf', LinearSVC(random_state=RANDOM_STATE, C=C, tol=tol))])
+                pipeline.fit(feat_train, label_train)
+                print("Results for Percentile: {0}, C: {1}, tol: {2}:".format(num_variables, C, tol))
+                y_pred = pipeline.predict(feat_test)
+                print(classification_report(label_test, y_pred, target_names=['non-car', 'car']))
+                current_f1 = metrics.f1_score(label_test, y_pred)
+                if current_f1 > best_f1:
+                    best_f1 = current_f1
+                    # save results to pandas dataframe:
+                    pickle.dump(pipeline, open(DATASET_PATH + "estimator.p", "wb"))

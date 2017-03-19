@@ -5,7 +5,7 @@ PATH_TEST = '/home/carnd/Self-Driving-Car-ND/Term1/P5 - Vehicle Detection and Tr
 OUTPUT_IMAGES = '/home/carnd/Self-Driving-Car-ND/Term1/P5 - Vehicle Detection and Tracking/images/'
 
 # HOG Parameters
-PIX_PER_CELL = 8
+PIX_PER_CELL = 16
 CELL_PER_BLOCK = 2
 ORIENT = 9
 HOG_CHANNEL = 'ALL'
@@ -40,4 +40,4 @@ COLOR = (0, 0, 255)
 THICK = 6
 
 # HEATMAP threshold:
-THRESHOLD = 10
+THRESHOLD = 30
