@@ -561,3 +561,41 @@ def run_models(feat_train, label_train, feat_test, label_test):
                     best_f1 = current_f1
                     # save results to pandas dataframe:
                     pickle.dump(pipeline, open(DATASET_PATH + "estimator.p", "wb"))
+                    
+             
+def create_video(path_to_video):
+    from moviepy.editor import VideoFileClip
+    clip2 = VideoFileClip(path_to_video)
+    challenge_clip = clip2.fl_image(process_img)
+    challenge_clip.write_videofile(path_to_video.replace(".mp4", "_solved.mp4"), audio=False)
+    
+    
+class BoundingBoxes:
+    def __init__(self, n=10):
+        # length of queue to store data
+        self.n = n
+        # hot windows of the last n images
+        self.recent_boxes = deque([], maxlen=n)
+        # current boxes
+        self.current_boxes = None
+        self.allboxes = []
+
+    def add_boxes(self):
+        self.recent_boxes.appendleft(self.current_boxes)
+
+    def set_current_boxes(self, boxes):
+        self.current_boxes = boxes
+
+    def get_all_boxes(self):
+        allboxes = []
+        for boxes in self.recent_boxes:
+            allboxes += boxes
+        if len(allboxes) == 0:
+            self.allboxes = None
+        else:
+            self.allboxes = allboxes
+
+    def update(self, boxes):
+        self.set_current_boxes(boxes)
+        self.add_boxes()
+        self.get_all_boxes()
