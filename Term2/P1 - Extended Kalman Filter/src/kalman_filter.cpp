@@ -1,9 +1,4 @@
 #include "kalman_filter.h"
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <stdlib.h>
 using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -59,6 +54,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
+  float PI = 3.1416;
   VectorXd Hx = VectorXd(3);
   float px = x_(0);
   float py = x_(1);
@@ -76,11 +72,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   Hx << rho, phi, rho_dot;
   VectorXd y = z - Hx;
   // normalize result to -pi and pi
-  if ((y(1)) > 3.14 / 2.){
-      y(1) = y(1) - 2 * 3.14;
-  }
-  if ((y(1)) < -3.14 / 2.){
-      y(1) = y(1) + 2 * 3.14;
+  if (fabs(y(1))>3.14){
+      y(1) = fmod(y(1),2*3.14);
   }
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
