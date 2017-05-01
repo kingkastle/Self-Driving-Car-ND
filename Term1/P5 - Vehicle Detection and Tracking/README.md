@@ -549,6 +549,9 @@ PROB_THRESHOLD = 0.7 # Classifier Class probability
 
 # HEATMAP threshold:
 THRESHOLD = 30   # Minimum threshold used to flag a window as positive
+
+# Number of frames:
+n = 21
 ```
 
 Final result is available in [Youtube](https://youtu.be/5uYcCD5XF4E)
