@@ -1,0 +1,26 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/
+Term1/P3 - Behavioral-Cloning/__pycache__/
+Term1/P3 - Behavioral-Cloning/final_drive2.mp4
+Term1/P3 - Behavioral-Cloning/final_drive2/
+Term1/P3 - Behavioral-Cloning/scripts/__pycache__/
+Term1/P3 - Behavioral-Cloning/scripts/final_drive.mp4
+Term1/P3 - Behavioral-Cloning/scripts/final_drive/
+Term1/P4 - Advance Traffic Lines Recognition/CarND-Advanced-Lane-Lines/
+Term1/P4 - Advance Traffic Lines Recognition/images/color_gradient_transformations.png
+Term1/P4 - Advance Traffic Lines Recognition/images/color_transformations.png
+Term1/P4 - Advance Traffic Lines Recognition/images/lines_identification.png
+Term1/P4 - Advance Traffic Lines Recognition/images/perspective_grad_color_transformations.png
+Term1/P4 - Advance Traffic Lines Recognition/images/perspective_transformations.png
+Term1/P4 - Advance Traffic Lines Recognition/images/raw_undistorted.png
+Term1/P4 - Advance Traffic Lines Recognition/images/road_dimensions_in_projection.jpg
+Term1/P4 - Advance Traffic Lines Recognition/images/sobel_transformations.png
+Term1/P4 - Advance Traffic Lines Recognition/images/test.png
+Term1/P4 - Advance Traffic Lines Recognition/project_video.mp4
+Term1/P4 - Advance Traffic Lines Recognition/project_video_solved.mp4
+Term1/P4 - Advance Traffic Lines Recognition/test.py
+Would skip repository Term1/P5 - Vehicle Detection and Tracking/CarND-Vehicle-Detection/
+Term1/P5 - Vehicle Detection and Tracking/test2.py
+Term1/P5 - Vehicle Detection and Tracking/tests.py
+
