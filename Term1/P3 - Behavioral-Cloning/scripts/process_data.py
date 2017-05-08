@@ -7,7 +7,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
-from config import *
+from scripts.config import *
 
 
 def brightness_images(image, intensity):
@@ -27,8 +27,8 @@ def brightness_images(image, intensity):
 def random_shadow(image):
     """
     Generate Random Shadows
-    :param image:
-    :return:
+    :param image: input image
+    :return: output image with brightness applied
     """
     top_y = image.shape[1] * np.random.uniform()
     top_x = 0
@@ -38,22 +38,16 @@ def random_shadow(image):
     shadow_mask = 0 * image_hsv[:, :, 2]
     X_m = np.mgrid[0:image.shape[0], 0:image.shape[1]][0]
     Y_m = np.mgrid[0:image.shape[0], 0:image.shape[1]][1]
-
     shadow_mask[((X_m - top_x) * (bot_y - top_y) - (bot_x - top_x) * (Y_m - top_y) >= 0)] = 1
-
     random_bright = .4 + np.random.uniform()
     random_bright = np.clip(random_bright, 0.4, 0.9)  # Between 0.4 and 0.9 is the ideal value to generate shadows
-
     cond1 = shadow_mask == 1
     cond0 = shadow_mask == 0
-
     if np.random.randint(2) == 1:
         image_hsv[:, :, 2][cond1] = image_hsv[:, :, 2][cond1] * random_bright
     else:
         image_hsv[:, :, 2][cond0] = image_hsv[:, :, 2][cond0] * random_bright
-
     image = cv2.cvtColor(image_hsv, cv2.COLOR_HSV2RGB)
-
     return image
 
 
@@ -78,7 +72,7 @@ def trans_image(image, steer, trans_range, intensity):
 
 def augmented_images(img, steering_angle, flipping, intensity):
     """
-    Generates augmented pictures changing brightness, flipping or translation
+    Generates augmented pictures changing brightness, flipping.
     :param img: image array
     :param steering_angle: corresponding steering angle
     :param intensity: numpy random transformation
@@ -95,7 +89,6 @@ def augmented_images(img, steering_angle, flipping, intensity):
         steering_angle *= -1.
     # translate image:
     y_steer = steering_angle
-    # img, y_steer = trans_image(img, steering_angle, max_translation, intensity) # Not used!
     return img, y_steer
 
 
@@ -111,7 +104,6 @@ def process_images(path_img, X_PIX, Y_PIX, Y_CROP):
     # some imgs have an incorrect path:
     if 'rafaelcastillo' in path_img:
         path_img = path_img.replace("/home/rafaelcastillo/Documents/SDCND/Simulators/udacity-sdc-udacity-self-driving-car-simulator-dominique-development-linux-desktop-64-bit-5/Data/", "")
-
     # read image:
     img = cv2.imread(path_img, 1)
     # normalize image:
@@ -123,50 +115,48 @@ def process_images(path_img, X_PIX, Y_PIX, Y_CROP):
     return img
 
 
-############################################################
-# Process Data_test:
-############################################################
-if __name__ == "__main__":
-    print("Processing...")
-
+def generate_dataset(threshold_straight=0.0, threshold_straight_near=0.0):
+    """
+    Process input datasets to generate pickle files to feed neural network
+    :param threshold_straight: float number in 0-1 range to determine the portion of straight drives removed
+    :param threshold_straight_near: float number in 0-1 range to determine the portion of near straight drives removed
+    :return: pickle objects with feature and label sets
+    """
     # Read files from multiple sources:
     dataset = []
-    for sour in sources:
-        print ("Loading source: ", sour)
+    for sour in SOURCES:
+        print("Loading source: ", sour)
         # load data
-        df = pandas.read_csv(sources[sour] + "driving_log.csv", sep=",")
+        df = pandas.read_csv(SOURCES[sour] + "driving_log.csv", sep=",")
 
         # some required transformation in the dataset:
-        df["center"] = df['center'].apply(lambda x: sources[sour] + x)
+        df["center"] = df['center'].apply(lambda x: SOURCES[sour] + x)
         df[['steering', 'throttle', 'brake', 'speed']] = df[['steering', 'throttle', 'brake', 'speed']].astype(float)
 
         # Generate a list of tuples where the first element is the numpy array with images and the second element the
         # corresponding steering angle:
         dataset += [(process_images(df.loc[idx, 'center'], X_PIX, Y_PIX, Y_CROP), df.loc[idx, 'steering']) for
-            idx in range(0, df.shape[0])]
+                    idx in range(0, df.shape[0])]
 
-    print ("Dataset Size: ", len(dataset))
-
-    # remove straight drives:
-    # dataset = [tup for tup in dataset if tup[1] != 0] ## Not sure of the benefits of this statement
+    print("Dataset Size: ", len(dataset))
 
     # Generate X and Y sets for model_CNN training:
     X = np.concatenate([x[0][np.newaxis, :] for x in dataset], axis=0).astype('float32')
     Y = np.asarray([x[1] for x in dataset]).astype('float32')
 
-    # identify straight drives and remove 70% of them:
+    # identify straight drives and remove threshold of them:
     straight_drives = np.where(np.abs(Y) < 0.05)[0]
     num_sd = len(straight_drives)
-    print('Straight drives removed: ', int(0.7*num_sd))
-    X_bal = np.delete(X, straight_drives[:int(0.7*num_sd)], axis=0)
-    Y_bal = np.delete(Y, straight_drives[:int(0.7*num_sd)])
+    print('Straight drives removed: ', int(threshold_straight * num_sd))  # 0.7 works ok
+    X_bal = np.delete(X, straight_drives[:int(threshold_straight * num_sd)], axis=0)
+    Y_bal = np.delete(Y, straight_drives[:int(threshold_straight * num_sd)])
 
     # identify almost straight drives and remove 60% of them:
     almost_straight_drives = np.where((np.abs(Y) < 0.25) & (np.abs(Y) >= 0.05))[0]
     num_sd = len(almost_straight_drives)
-    print('Almost Straight drives removed: ', int(0.01 * num_sd))
-    X_bal = np.delete(X_bal, almost_straight_drives[:int(0.01 * num_sd)], axis=0)
-    Y_bal = np.delete(Y_bal, almost_straight_drives[:int(0.01 * num_sd)])
+    print('Almost Straight drives removed: ', int(threshold_straight_near * num_sd))  # 0.01 works ok
+    X_bal = np.delete(X_bal, almost_straight_drives[:int(threshold_straight_near * num_sd)], axis=0)
+    Y_bal = np.delete(Y_bal, almost_straight_drives[:int(threshold_straight_near * num_sd)])
 
     print("Dataset shape:", X_bal.shape)
 
@@ -180,11 +170,25 @@ if __name__ == "__main__":
     ax2.set_title('Balanced Distribution', fontsize=12)
     plt.savefig(PATH_TO_IMG + 'y_distributions.png')
 
+    # convert to float:
+    X_bal = X_bal.astype('float32')
+    Y_bal = Y_bal.astype('float32')
+
     # Save files to pickle:
     with open(CURRENT_PATH + 'features_{0}.pickle'.format(VERSION), 'wb') as handle:
         pickle.dump(X_bal, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     with open(CURRENT_PATH + 'labels_{0}.pickle'.format(VERSION), 'wb') as handle:
         pickle.dump(Y_bal, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    return X_bal, Y_bal
+
+
+############################################################
+# Process Data_test:
+############################################################
+if __name__ == "__main__":
+    print("Processing...")
+    generate_dataset(threshold_straight=0.7, threshold_straight_near=0.01)
+
 
     print("Process completed!")

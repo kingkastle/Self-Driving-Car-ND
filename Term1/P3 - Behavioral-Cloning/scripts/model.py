@@ -10,22 +10,23 @@ https://github.com/fchollet/keras/issues/1638
 import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
-import warnings
 
 # Fix error with TF and Keras
 import tensorflow as tf
-
-from config import *
-import process_data
-
 tf.python.control_flow_ops = tf
 
-from keras.models import Sequential
+from scripts.config import *
+from scripts.process_data import *
 
+from keras.models import Sequential
 from keras.layers.convolutional import Convolution2D
-from keras.layers.pooling import MaxPooling2D
-from keras.layers.core import Dense, Dropout, Flatten, Activation
+from keras.layers.core import Dense, Flatten, Activation
 from keras.callbacks import EarlyStopping
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+
 
 def generator(samples, labels, batch_size):
     """
@@ -45,90 +46,111 @@ def generator(samples, labels, batch_size):
             flipping = np.random.choice([True, False])
             # random sample
             idx = np.random.randint(samples.shape[0])
-            img_aug, steering_aug = process_data.augmented_images(samples[idx], labels[idx], flipping, intensity)
+            img_aug, steering_aug = augmented_images(samples[idx], labels[idx], flipping, intensity)
             batch_images.append(img_aug)
             batch_steering.append(steering_aug)
         batch_images = np.asarray(batch_images)
         batch_steering = np.asarray(batch_steering)
         yield batch_images, batch_steering
 
+def learning_curves(model_name, history, show_plots=False):
+    """
+    Display and save learning curves.
+
+    Args:
+        * model_path: path to models directory
+        * model_name: name of trained and validated model
+        * show_plots: whether to show plots or not while executing
+    """
+    # loss
+    plt.figure()
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('loss of the model')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['validation set', 'training set'], loc='upper right')
+    plt.savefig(PATH_TO_IMG + "/" + model_name + '_loss.png')
+    if show_plots: plt.show()
 
 ############################################################
-# Configuration:
+# Process Data_test:
 ############################################################
-batch_size = 512
-nb_epochs = 3
-seed = 2016
-test_size = 0.2
+if __name__ == "__main__":
+    print("Processing final model...")
+    ############################################################
+    # Configuration:
+    ############################################################
+    batch_size = 512
+    nb_epochs = 3
+    seed = 2016
+    test_size = 0.2
 
+    # for reproducibility
+    np.random.seed(seed)
 
-# for reproducibility
-np.random.seed(seed)
+    ############################################################
+    # Load and process Data_test:
+    ############################################################
+    with open(CURRENT_PATH + 'features_{0}.pickle'.format(VERSION), 'rb') as handle:
+        X = pickle.load(handle)
+    with open(CURRENT_PATH + 'labels_{0}.pickle'.format(VERSION), 'rb') as handle:
+        y = pickle.load(handle)
 
-############################################################
-# Load and process Data_test:
-############################################################
-with open(CURRENT_PATH + 'features_{0}.pickle'.format(VERSION), 'rb') as handle:
-    X = pickle.load(handle)
-with open(CURRENT_PATH + 'labels_{0}.pickle'.format(VERSION), 'rb') as handle:
-    y = pickle.load(handle)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=seed)
 
-X = X.astype('float32')
-y = y.astype('float32')
+    print("X_train shape: ", X_train.shape)
+    print("y_train shape: ", y_train.shape)
 
+    ############################################################
+    # Define model
+    ############################################################
+    model = Sequential()
+    model.add(
+        Convolution2D(nb_filter=24, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2),
+                      input_shape=(Y_PIX, X_PIX, 3)))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(nb_filter=36, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2)))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(nb_filter=48, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2)))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(nb_filter=64, nb_row=3, nb_col=3, border_mode='valid'))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(nb_filter=64, nb_row=3, nb_col=3, border_mode='valid'))
+    model.add(Activation('relu'))
+    model.add(Flatten())
+    model.add(Dense(1164))
+    model.add(Activation('relu'))
+    model.add(Dense(100))
+    model.add(Activation('relu'))
+    model.add(Dense(50))
+    model.add(Activation('relu'))
+    model.add(Dense(10))
+    model.add(Activation('relu'))
+    model.add(Dense(1))
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=seed)
+    # keras model compile, choose optimizer and loss func
+    model.compile(optimizer='adam', loss='mse')
 
-print("X_train shape: ", X_train.shape)
-print("y_train shape: ", y_train.shape)
+    # train generator:
+    train_generator = generator(X_train, y_train, batch_size=batch_size)
+    validation_generator = generator(X_test, y_test, batch_size=batch_size)
 
+    # callback:
+    early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1, mode='auto')
 
-############################################################
-# Define our time-distributed setup
-############################################################
-model = Sequential()
-model.add(
-Convolution2D(nb_filter=24, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2), input_shape=(Y_PIX, X_PIX, 3)))
-model.add(Activation('relu'))
-model.add(Convolution2D(nb_filter=36, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2)))
-model.add(Activation('relu'))
-model.add(Convolution2D(nb_filter=48, nb_row=5, nb_col=5, border_mode='valid', subsample=(2, 2)))
-model.add(Activation('relu'))
-model.add(Convolution2D(nb_filter=64, nb_row=3, nb_col=3, border_mode='valid'))
-model.add(Activation('relu'))
-model.add(Convolution2D(nb_filter=64, nb_row=3, nb_col=3, border_mode='valid'))
-model.add(Activation('relu'))
-model.add(Flatten())
-model.add(Dense(1164))
-model.add(Activation('relu'))
-model.add(Dense(100))
-model.add(Activation('relu'))
-model.add(Dense(50))
-model.add(Activation('relu'))
-model.add(Dense(10))
-model.add(Activation('relu'))
-model.add(Dense(1))
+    # run epochs of sampling data then training
+    model.fit_generator(train_generator, samples_per_epoch=batch_size * 100, nb_epoch=nb_epochs, verbose=1,
+                        validation_data=validation_generator, nb_val_samples=X_test.shape[0])
 
-# keras model compile, choose optimizer and loss func
-model.compile(optimizer='adam', loss='mse')
+    # evaluate:
+    print("Model Evaluation: ", model.evaluate(X_test, y_test, batch_size=32, verbose=0, sample_weight=None))
 
-# train generator:
-train_generator = generator(X_train, y_train, batch_size=batch_size)
-validation_generator = generator(X_test, y_test, batch_size=batch_size)
+    # save the model
+    model.save(PATH_TO_MODEL + 'model_{0}.h5'.format(VERSION))
+    print("model Saved!", PATH_TO_MODEL + 'model_{0}.h5'.format(VERSION))
 
-# callback:
-early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1, mode='auto')
+    print("Model structure:")
+    print(model.summary())
 
-# run epochs of sampling data then training
-model.fit_generator(train_generator, samples_per_epoch=batch_size*100, nb_epoch=nb_epochs, verbose=1,
-                    validation_data=validation_generator, nb_val_samples=X_test.shape[0])
-
-# evaluate:
-print("Model Evaluation: ", model.evaluate(X_test, y_test, batch_size=32, verbose=0, sample_weight=None))
-
-# save the model
-model.save(PATH_TO_MODEL + 'model_{0}.h5'.format(VERSION))
-print("model Saved!", PATH_TO_MODEL + 'model_{0}.h5'.format(VERSION))
-
-print("Model structure:")
-print(model.summary())
+    print("Process completed!")
