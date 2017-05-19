@@ -26,8 +26,17 @@ public:
   ///* state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   VectorXd x_;
 
+  ///* state vector augmented: [pos1 pos2 vel_abs yaw_angle yaw_rate noise_acceleration noise_angle] in SI units and rad
+  VectorXd x_aug;
+
   ///* state covariance matrix
   MatrixXd P_;
+
+  ///* state covariance matrix augmented
+  MatrixXd P_aug;
+
+  ///* sigma points matrix
+  MatrixXd Xsig_aug;
 
   ///* predicted sigma points matrix
   MatrixXd Xsig_pred_;
@@ -108,6 +117,9 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+  // helper function to normalize angles:
+  double AngleNormalization(double angle);
 };
 
 #endif /* UKF_H */
