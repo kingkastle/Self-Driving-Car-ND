@@ -171,24 +171,19 @@ bool safe_turn(double check_car_s, double car_s, int security, double car_speed,
 
 		//if a car is behind within the conflict area and runing faster:
 		if ((check_car_s <= car_s) && (car_s - check_car_s) < abs(speed_diff*time_manouver) && (speed_diff>=0)) {
-				std::cout << "					Condition 1 meet! " << std::endl;
 				turn = false;
 		}
 		//if a car is on front moving slower than the reference car and within the conflict area:
 		if (((check_car_s>=front_car_s) &&(check_car_s-front_car_s)<security) && (ref_speed_diff<=0)) {
-				std::cout << "					Condition 2 meet! " << std::endl;
-				std::cout << "					speed_diff*time_manouver " << speed_diff*time_manouver << std::endl;
 				turn = false;
 		}
 		// if a car is between the autonomous car and the reference car
 		if ((check_car_s >= car_s) && (check_car_s <= front_car_s)){
-				std::cout << "					Condition 2.2 meet! " << std::endl;
 				turn = false;
 		}
 
 		// if both cars are at the same s or check car is behind the reference car
 		if(abs(check_car_s - car_s) < 5 || ((front_car_s - check_car_s) > 5 && (check_car_s>=car_s-5))){
-				std::cout << "					Condition 3 meet! " << std::endl;
 				turn = false;
 		}
 
@@ -238,10 +233,6 @@ vector<double> car_front(json sensor_fusion,double lane,double car_speed,double 
 								front_car_speed = check_speed;
 								front_car_s = check_car_s;
 								car_break = .3 * security/(check_car_s-car_s);
-								std::cout << "ALERT!!!	between_distance updated: " << between_distance << std::endl;
-								std::cout << "ALERT!!!	front car_s: " << front_car_s << std::endl;
-								std::cout << "ALERT!!!	front car_d: " << d << std::endl;
-								std::cout << "ALERT!!!	front car_line: " << get_line_from_d(d) << std::endl;
 						}
 						if((check_car_s > car_s) && (check_car_s-car_s) < security*0.8 && (car_speed > check_speed)){
 								too_close = 1;
@@ -282,19 +273,6 @@ vector<bool> car_turn(json sensor_fusion,vector<double> front,double lane,double
 
 						if(turn_right && (lane < 2) && (lane + 1 == get_line_from_d(d))){
 								turn_right = safe_turn(check_car_s, car_s, security, car_speed, check_speed, front_car_speed,front_car_s);
-								if(!turn_right){
-										std::cout << "	Turn right is NOT possible for this car" << std::endl;
-										std::cout << "	Analyzing car in left lane id:! "<< sensor_fusion[i][0] << std::endl;
-										std::cout << "	check line: " << get_line_from_d(d) << std::endl;
-										std::cout << "	check d: " << d << std::endl;
-										std::cout << "	car_s " << car_s << std::endl;
-										std::cout << "	car_lane " << lane << std::endl;
-										std::cout << "	check_car_s " << check_car_s << std::endl;
-										std::cout << "	check_car_s - car_s " << check_car_s - car_s << std::endl;
-										std::cout << "	car_speed - check_speed " << car_speed - check_speed << std::endl;
-										std::cout << "	check_speed " << check_speed << std::endl;
-										std::cout << "	ref_speed " << front_car_speed << std::endl;
-								}
 						}
 
 						// check turn left:
@@ -304,19 +282,6 @@ vector<bool> car_turn(json sensor_fusion,vector<double> front,double lane,double
 
 						if(turn_left && (lane > 0) && (lane - 1 == get_line_from_d(d))){
 								turn_left = safe_turn(check_car_s, car_s, security, car_speed, check_speed, front_car_speed,front_car_s);
-								if(!turn_left){
-										std::cout << "	Turn left is NOT possible for this car" << std::endl;
-										std::cout << "	Analyzing car in left lane id:! "<< sensor_fusion[i][0] << std::endl;
-										std::cout << "	check line: " << get_line_from_d(d) << std::endl;
-										std::cout << "	check d: " << d << std::endl;
-										std::cout << "	car_s " << car_s << std::endl;
-										std::cout << "	car_lane " << lane << std::endl;
-										std::cout << "	check_car_s " << check_car_s << std::endl;
-										std::cout << "	check_car_s - check_s " << check_car_s - car_s << std::endl;
-										std::cout << "	car_speed - check_speed " << car_speed - check_speed << std::endl;
-										std::cout << "	check_speed " << check_speed << std::endl;
-										std::cout << "	ref_speed " << front_car_speed << std::endl;
-								}
 						}
 				}
 
@@ -429,11 +394,6 @@ int main() {
 						bool turn_right = true;
 						bool turn_left = true;
 
-
-						std::cout << "	************* " << std::endl;
-						std::cout << "	*START CYCLE* " << std::endl;
-						std::cout << "	car_lane start " << lane << std::endl;
-
 						// check if close car on front:
 						vector<double> front = car_front(sensor_fusion,lane,car_speed,car_s,security,prev_size);
 
@@ -463,7 +423,6 @@ int main() {
 										lane -= 1;
 										maneuver_start_s = car_s;
 										maneuver_completed = false;
-										std::cout << "	turn_left OK " << turn_left << std::endl;
 								}
 						}
 						// A car is in front and need to turn right:
@@ -472,7 +431,6 @@ int main() {
 										lane += 1;
 										maneuver_start_s = car_s;
 										maneuver_completed = false;
-										std::cout << "	turn_right OK " << turn_right << std::endl;
 								}
 
 						}
@@ -480,15 +438,10 @@ int main() {
 						// adjust speed with regards to current speed or cars infront of us
 						if(too_close){
 								ref_vel -= front[4]; //.224;
-								std::cout << "	Pushing Break!!!!! " << std::endl;
 						}
 						else if(ref_vel < 49.5){ //49.5
 								ref_vel += .224;
 						}
-
-						std::cout << "	car_lane final " << lane << std::endl;
-						std::cout << "	*END   CYCLE* " << std::endl;
-						std::cout << "	************* " << std::endl;
 
 
             // Create a list of widely spaced (x, y) waypoints, spaced 30m:
