@@ -1,8 +1,0 @@
-prefix=/udacity/CarND-Capstone/ros/install
-
-Name: styx_msgs
-Description: Description of styx_msgs
-Version: 0.0.0
-Cflags: -I/udacity/CarND-Capstone/ros/install/include
-Libs: -L/udacity/CarND-Capstone/ros/install/lib 
-Requires: 
